@@ -18,7 +18,7 @@ public class TotalCostCalculatorImpl implements TotalCostCalculator {
         this.rootDiscount = discountRuleFactory.createRuleChain();
     }
 
-    private final ToDoubleFunction<Map.Entry<Product, Long>> totalCostWithSumFunction = entry -> {
+    private final ToDoubleFunction<Map.Entry<Product, Long>> summingFunc = entry -> {
         final Product product = entry.getKey();
         final Long numberOfProductsInTheGroup = entry.getValue();
         BigDecimal unitPrice = product.getPrice();
@@ -37,7 +37,7 @@ public class TotalCostCalculatorImpl implements TotalCostCalculator {
         Double summedCost = productGroups
                 .entrySet()
                 .stream()
-                .collect(Collectors.summingDouble(totalCostWithSumFunction));
+                .collect(Collectors.summingDouble(summingFunc));
 
         BigDecimal totalDiscount = rootDiscount.calculate(Order.of(order));
 
