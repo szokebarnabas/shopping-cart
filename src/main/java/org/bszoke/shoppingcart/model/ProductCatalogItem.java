@@ -5,6 +5,7 @@ import org.bszoke.shoppingcart.model.discount.DiscountType;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ProductCatalogItem {
 
@@ -36,5 +37,20 @@ public class ProductCatalogItem {
 
     public List<DiscountType> getDiscounts() {
         return discounts;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductCatalogItem that = (ProductCatalogItem) o;
+        return Objects.equals(productName, that.productName) &&
+                Objects.equals(price, that.price) &&
+                Objects.equals(discounts, that.discounts);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(productName, price, discounts);
     }
 }
